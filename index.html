@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>コードネーム風ゲーム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>コードネーム風ゲーム</h1>
+  <textarea id="word-input" placeholder="単語を改行で25個入力してください"></textarea>
+  <div id="counter">0 / 25</div>
+  <button onclick="startGame()">ゲーム開始</button>
+  <button onclick="toggleMode()">モード切替（プレイヤー / ゲームマスター）</button>
+  <div id="board" class="board"></div>
+  <script src="script.js"></script>
+</body>
+</html>

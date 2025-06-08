@@ -1,0 +1,30 @@
+body {
+  font-family: sans-serif;
+  padding: 10px;
+  text-align: center;
+}
+textarea {
+  width: 90%;
+  height: 100px;
+  margin-bottom: 5px;
+}
+.board {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+  margin-top: 10px;
+}
+.card {
+  padding: 10px;
+  background-color: lightgray;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+.card.revealed-red { background-color: crimson; color: white; }
+.card.revealed-blue { background-color: royalblue; color: white; }
+.card.revealed-neutral { background-color: burlywood; }
+.card.revealed-black { background-color: black; color: white; }
+.card.gm-red { background-color: pink; }
+.card.gm-blue { background-color: lightblue; }
+.card.gm-neutral { background-color: wheat; }
+.card.gm-black { background-color: gray; color: white; }
