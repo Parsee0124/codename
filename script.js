@@ -19,7 +19,7 @@ function startGame() {
     alert("単語は最低25個必要です。");
     return;
   }
-  // 単語と色を初期化
+  // 単語と色を初期化（ゲーム開始時のみ）
   shuffledWords = shuffle(words).slice(0, 25);
   cardColors = assignColors();
   flippedStates = new Array(25).fill(false);
@@ -29,7 +29,7 @@ function startGame() {
 function toggleMode() {
   isGameMaster = !isGameMaster;
   document.getElementById("modeLabel").textContent = isGameMaster ? "ゲームマスター" : "プレイヤー";
-  renderBoard(); // 状態を変えずに再描画だけ
+  renderBoard(); // 状態は変えずに再描画
 }
 
 function renderBoard() {
