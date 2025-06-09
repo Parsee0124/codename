@@ -50,7 +50,17 @@
 </body>
 </html>
 <style>
-  /* 既存のスタイルに追加・変更してOK */
+  body {
+    font-family: sans-serif;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  textarea {
+    width: 300px;
+    height: 150px;
+  }
+
   #board {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -59,6 +69,7 @@
     max-width: 600px;
     margin: 20px auto 0;
   }
+
   .card {
     width: 100px;
     height: 60px;
@@ -66,5 +77,22 @@
     border: 1px solid #ccc;
     cursor: pointer;
     border-radius: 5px;
+    background-color: white;
+    color: black;
   }
+
+  /* めくられたカードの文字色は白 */
+  .card.flipped {
+    color: white;
+  }
+
+  /* ゲームマスター表示時の未反転カードも白文字にする */
+  .red, .blue, .neutral, .assassin {
+    color: white !important;
+  }
+
+  .red { background-color: crimson; }
+  .blue { background-color: royalblue; }
+  .neutral { background-color: darkgray; }
+  .assassin { background-color: black; }
 </style>
