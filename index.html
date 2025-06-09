@@ -1,98 +1,44 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>コードネーム風ゲーム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="module" src="main.js"></script>
   <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      padding: 1rem;
-    }
-    textarea {
-      width: 300px;
-      height: 150px;
-    }
-    .card {
-      display: inline-block;
-      margin: 5px;
-      width: 100px;
-      height: 60px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    .flipped {
-      color: white;
-    }
-    .red { background-color: crimson; }
-    .blue { background-color: royalblue; }
-    .neutral { background-color: darkgray; }
-    .assassin { background-color: black; }
+    body { font-family: sans-serif; text-align: center; padding: 10px; }
+    #board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; max-width: 600px; margin: auto; }
+    .card { padding: 10px; border-radius: 8px; border: 1px solid #ccc; min-height: 40px; font-size: 14px; }
+    .red { background: #ffdddd; }
+    .blue { background: #ddeeff; }
+    .black { background: #333; color: white; }
+    .neutral { background: #eee; }
+    .flipped { opacity: 0.6; }
   </style>
 </head>
 <body>
   <h1>コードネーム風ゲーム</h1>
-
-  <p>単語を1行ずつ入力してください（最大25個以上OK）</p>
-  <textarea id="wordInput" placeholder="例：ねこ&#10;いぬ&#10;さかな..."></textarea>
-  <p id="wordCount">現在 0 個</p>
-
-  <button onclick="startGame()">ゲーム開始</button>
-  <button onclick="toggleMode()">モード切替</button>
-  <p>現在のモード: <span id="modeLabel">プレイヤー</span></p>
-
-  <div id="board" style="margin-top: 20px;"></div>
-
-  <script src="script.js"></script>
+  <div id="setup">
+    <input id="roomId" placeholder="ルームID">
+    <button onclick="joinRoom()">ルームに参加</button>
+    <button onclick="createRoom()">ルーム作成</button>
+  </div>
+  <div id="roleSelect" style="display:none;">
+    <h2>役職を選んでください</h2>
+    <button onclick="selectRole('red_sm')">赤SM</button>
+    <button onclick="selectRole('red_agent')">赤エージェント</button>
+    <button onclick="selectRole('blue_sm')">青SM</button>
+    <button onclick="selectRole('blue_agent')">青エージェント</button>
+    <button onclick="selectRole('viewer')">観戦者</button>
+  </div>
+  <div id="game" style="display:none;">
+    <div id="wordInputArea">
+      <textarea id="wordInput" placeholder="単語を改行で25個まで入力" rows="6" cols="30"></textarea><br>
+      <button onclick="startGame()">ゲームスタート</button>
+    </div>
+    <div id="board"></div>
+    <button onclick="endGame()">ゲーム終了</button>
+  </div>
 </body>
 </html>
-<style>
-  body {
-    font-family: sans-serif;
-    text-align: center;
-    padding: 1rem;
-  }
-
-  textarea {
-    width: 300px;
-    height: 150px;
-  }
-
-  #board {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    justify-items: center;
-    max-width: 600px;
-    margin: 20px auto 0;
-  }
-
-  .card {
-    width: 100px;
-    height: 60px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    border-radius: 5px;
-    background-color: white;
-    color: black;
-  }
-
-  /* めくられたカードの文字色は白 */
-  .card.flipped {
-    color: white;
-  }
-
-  /* ゲームマスター表示時の未反転カードも白文字にする */
-  .red, .blue, .neutral, .assassin {
-    color: white !important;
-  }
-
-  .red { background-color: crimson; }
-  .blue { background-color: royalblue; }
-  .neutral { background-color: darkgray; }
-  .assassin { background-color: black; }
-</style>
