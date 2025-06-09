@@ -3,42 +3,22 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>コードネーム風ゲーム</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script type="module" src="main.js"></script>
-  <style>
-    body { font-family: sans-serif; text-align: center; padding: 10px; }
-    #board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; max-width: 600px; margin: auto; }
-    .card { padding: 10px; border-radius: 8px; border: 1px solid #ccc; min-height: 40px; font-size: 14px; }
-    .red { background: #ffdddd; }
-    .blue { background: #ddeeff; }
-    .black { background: #333; color: white; }
-    .neutral { background: #eee; }
-    .flipped { opacity: 0.6; }
-  </style>
+  <title>コードネーム風ゲーム</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>コードネーム風ゲーム</h1>
-  <div id="setup">
-    <input id="roomId" placeholder="ルームID">
-    <button onclick="joinRoom()">ルームに参加</button>
-    <button onclick="createRoom()">ルーム作成</button>
-  </div>
-  <div id="roleSelect" style="display:none;">
-    <h2>役職を選んでください</h2>
-    <button onclick="selectRole('red_sm')">赤SM</button>
-    <button onclick="selectRole('red_agent')">赤エージェント</button>
-    <button onclick="selectRole('blue_sm')">青SM</button>
-    <button onclick="selectRole('blue_agent')">青エージェント</button>
-    <button onclick="selectRole('viewer')">観戦者</button>
+  <div id="lobby">
+    <button id="createRoom">ルーム作成</button>
+    <input id="roomIdInput" placeholder="ルームIDを入力">
+    <button id="joinRoom">ルームに参加</button>
   </div>
   <div id="game" style="display:none;">
-    <div id="wordInputArea">
-      <textarea id="wordInput" placeholder="単語を改行で25個まで入力" rows="6" cols="30"></textarea><br>
-      <button onclick="startGame()">ゲームスタート</button>
-    </div>
+    <textarea id="wordInput" placeholder="単語を25個入力（改行で区切る）"></textarea>
+    <button id="startGame">ゲーム開始</button>
+    <button id="endGame">ゲーム終了</button>
     <div id="board"></div>
-    <button onclick="endGame()">ゲーム終了</button>
   </div>
+  <script type="module" src="main.js"></script>
 </body>
 </html>
