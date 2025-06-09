@@ -1,18 +1,68 @@
-
 body {
+  margin: 0;
   font-family: sans-serif;
-  padding: 20px;
+  background-color: #f9f9f9;
+  color: #222;
 }
-#board {
+
+#app {
+  padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+.grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  margin-top: 20px;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
+
 .card {
-  padding: 10px;
-  border-radius: 8px;
-  background-color: lightgray;
+  background-color: #eee;
+  padding: 1rem;
   text-align: center;
-  cursor: pointer;
+  font-weight: bold;
+  border-radius: 8px;
+  min-height: 50px;
+  word-break: break-word;
+}
+
+.card.revealed {
+  opacity: 0.6;
+}
+
+.card.red {
+  background-color: #f88;
+}
+
+.card.blue {
+  background-color: #88f;
+}
+
+.card.black {
+  background-color: #000;
+  color: #fff;
+}
+
+.card.neutral {
+  background-color: #ccc;
+}
+
+.hidden-role-info {
+  display: none;
+}
+
+.spymaster-view .card::after {
+  content: attr(data-role);
+  display: block;
+  font-size: 0.75rem;
+  color: #333;
 }

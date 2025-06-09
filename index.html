@@ -1,24 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>コードネーム風ゲーム</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="main.js"></script>
 </head>
 <body>
-  <div id="lobby">
-    <button id="createRoom">ルーム作成</button>
-    <input id="roomIdInput" placeholder="ルームIDを入力">
-    <button id="joinRoom">ルームに参加</button>
-  </div>
-  <div id="game" style="display:none;">
-    <textarea id="wordInput" placeholder="単語を25個入力（改行で区切る）"></textarea>
-    <button id="startGame">ゲーム開始</button>
-    <button id="endGame">ゲーム終了</button>
-    <div id="board"></div>
-  </div>
-  <script type="module" src="main.js"></script>
+  <div id="app"></div>
 </body>
 </html>
