@@ -1,56 +1,75 @@
-let mode = "player"; // または "gm"
-const colors = ["red", "blue", "neutral", "black"];
 
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
+let words = [];
+let shuffledWords = [];
+let cardColors = [];
+let isGameMaster = false;
+let flippedStates = [];
+
+document.getElementById('wordInput').addEventListener('input', updateWordCount);
+
+function updateWordCount() {
+  const inputText = document.getElementById('wordInput').value.trim();
+  const wordList = inputText.split(/\n|\r/).filter(w => w.trim() !== '');
+  document.getElementById('wordCount').textContent = `現在 ${wordList.length} 個`;
+  words = wordList;
 }
-
-function updateCounter() {
-  const input = document.getElementById("word-input").value;
-  const count = input.trim().split(/\s+/).filter(w => w.length > 0).length;
-  document.getElementById("counter").innerText = count + " / 25";
-}
-
-document.getElementById("word-input").addEventListener("input", updateCounter);
 
 function startGame() {
-  const input = document.getElementById("word-input").value.trim().split(/\s+/).filter(w => w.length > 0);
-  if (input.length < 25) {
-    alert("25個以上の単語を入力してください");
+  if (words.length < 25) {
+    alert("単語は最低25個必要です。");
     return;
   }
-
-  const selectedWords = input.sort(() => 0.5 - Math.random()).slice(0, 25);
-  const board = document.getElementById("board");
-  board.innerHTML = "";
-
-  let colorPool = Array(9).fill("red").concat(Array(8).fill("blue"), Array(7).fill("neutral"), ["black"]);
-  shuffle(colorPool);
-
-  selectedWords.forEach((word, index) => {
-    const div = document.createElement("div");
-    const color = colorPool[index];
-    div.className = "card";
-    div.textContent = word;
-
-    if (mode === "gm") {
-      div.classList.add("gm-" + color);
-    }
-
-    div.addEventListener("click", () => {
-      if (mode === "player") {
-        div.classList.add("revealed-" + color);
-      }
-    });
-
-    board.appendChild(div);
-  });
+  // 単語と色を初期化
+  shuffledWords = shuffle(words).slice(0, 25);
+  cardColors = assignColors();
+  flippedStates = new Array(25).fill(false);
+  renderBoard();
 }
 
 function toggleMode() {
-  mode = (mode === "player") ? "gm" : "player";
-  startGame();
+  isGameMaster = !isGameMaster;
+  document.getElementById("modeLabel").textContent = isGameMaster ? "ゲームマスター" : "プレイヤー";
+  renderBoard(); // 状態を変えずに再描画だけ
+}
+
+function renderBoard() {
+  const board = document.getElementById("board");
+  board.innerHTML = "";
+
+  shuffledWords.forEach((word, i) => {
+    const btn = document.createElement("button");
+    btn.textContent = word;
+    btn.className = "card";
+
+    if (flippedStates[i]) {
+      btn.classList.add("flipped", cardColors[i]);
+    } else if (isGameMaster) {
+      btn.classList.add(cardColors[i]);
+    }
+
+    btn.onclick = () => {
+      if (!flippedStates[i]) {
+        flippedStates[i] = true;
+        renderBoard();
+      }
+    };
+    board.appendChild(btn);
+  });
+}
+
+function shuffle(array) {
+  const copy = [...array];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function assignColors() {
+  const colors = Array(9).fill("red")
+    .concat(Array(8).fill("blue"))
+    .concat(Array(7).fill("neutral"))
+    .concat("assassin");
+  return shuffle(colors);
 }
