@@ -1,6 +1,6 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getDatabase, ref, set, push, get, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getDatabase, ref, set, push, get, onValue, update } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD8uxvprTCzafTnu6XAhLiNQCjpF7ThCDE",
@@ -21,6 +21,7 @@ const roomIdInput = document.getElementById("roomIdInput");
 const wordInput = document.getElementById("wordInput");
 const startGameBtn = document.getElementById("startGame");
 const endGameBtn = document.getElementById("endGame");
+const board = document.getElementById("board");
 
 let currentRoomId = null;
 
@@ -32,6 +33,16 @@ function showGameUI() {
   wordInput.disabled = !isGM;
   startGameBtn.style.display = isGM ? "inline-block" : "none";
   endGameBtn.style.display = isGM ? "inline-block" : "none";
+}
+
+function renderBoard(words) {
+  board.innerHTML = "";
+  words.forEach(word => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.textContent = word;
+    board.appendChild(card);
+  });
 }
 
 createRoomBtn.onclick = async () => {
@@ -56,3 +67,30 @@ joinRoomBtn.onclick = async () => {
     alert("ルームが存在しません");
   }
 };
+
+startGameBtn.onclick = async () => {
+  const words = wordInput.value.trim().split(/\s+/);
+  if (words.length < 25) {
+    alert("25個以上の単語を入力してください");
+    return;
+  }
+  // 25個ランダム選択
+  const selected = [];
+  while (selected.length < 25) {
+    const rand = words[Math.floor(Math.random() * words.length)];
+    if (!selected.includes(rand)) selected.push(rand);
+  }
+  await update(ref(db, "rooms/" + currentRoomId), {
+    words: selected
+  });
+};
+
+// 単語が更新されたら自動で盤面に表示
+onValue(ref(db, "rooms"), snapshot => {
+  if (!currentRoomId) return;
+  const data = snapshot.val();
+  const room = data[currentRoomId];
+  if (room && room.words) {
+    renderBoard(room.words);
+  }
+});
