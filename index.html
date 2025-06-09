@@ -49,3 +49,22 @@
   <script src="script.js"></script>
 </body>
 </html>
+<style>
+  /* 既存のスタイルに追加・変更してOK */
+  #board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    justify-items: center;
+    max-width: 600px;
+    margin: 20px auto 0;
+  }
+  .card {
+    width: 100px;
+    height: 60px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+</style>
