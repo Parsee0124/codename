@@ -1,18 +1,51 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>コードネーム風ゲーム</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 1rem;
+    }
+    textarea {
+      width: 300px;
+      height: 150px;
+    }
+    .card {
+      display: inline-block;
+      margin: 5px;
+      width: 100px;
+      height: 60px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .flipped {
+      color: white;
+    }
+    .red { background-color: crimson; }
+    .blue { background-color: royalblue; }
+    .neutral { background-color: darkgray; }
+    .assassin { background-color: black; }
+  </style>
 </head>
 <body>
   <h1>コードネーム風ゲーム</h1>
-  <textarea id="word-input" placeholder="単語を改行で25個入力してください"></textarea>
-  <div id="counter">0 / 25</div>
+
+  <p>単語を1行ずつ入力してください（最大25個以上OK）</p>
+  <textarea id="wordInput" placeholder="例：ねこ&#10;いぬ&#10;さかな..."></textarea>
+  <p id="wordCount">現在 0 個</p>
+
   <button onclick="startGame()">ゲーム開始</button>
-  <button onclick="toggleMode()">モード切替（プレイヤー / ゲームマスター）</button>
-  <div id="board" class="board"></div>
+  <button onclick="toggleMode()">モード切替</button>
+  <p>現在のモード: <span id="modeLabel">プレイヤー</span></p>
+
+  <div id="board" style="margin-top: 20px;"></div>
+
   <script src="script.js"></script>
 </body>
 </html>
